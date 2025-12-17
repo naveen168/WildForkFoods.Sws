@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             x:Class="WildForkFoods.Sws.Mobile.Views.ScanPage">
+             <!--Title="Scan"-->
+    <Grid RowDefinitions="*,Auto" Padding="0">
+        <zxing:CameraBarcodeReaderView x:Name="cameraView" Grid.Row="0" BarcodesDetected="OnBarcodesDetected" />
+        <Label Grid.Row="1" Text="{Binding Status}" TextColor="Gray" />
+        <!--
+        <VerticalStackLayout Grid.Row="1" Padding="12" Spacing="8">
+            <Label Text="{Binding ProductName}" />
+            <HorizontalStackLayout Spacing="8">
+                <Entry WidthRequest="120" Keyboard="Numeric" Placeholder="Qty" Text="{Binding Quantity}" />
+                <Picker Title="Unit" ItemsSource="{Binding Units}" SelectedItem="{Binding SelectedUnit}" />
+                <Button Text="Add" Command="{Binding AddCommand}" />
+            </HorizontalStackLayout>
+            <Label Text="{Binding Status}" TextColor="Gray" />
+        </VerticalStackLayout>
+    -->
+    </Grid>
+</ContentPage>

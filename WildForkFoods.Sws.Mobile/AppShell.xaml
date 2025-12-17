@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="WildForkFoods.Sws.Mobile.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:WildForkFoods.Sws.Mobile"
+    xmlns:views="clr-namespace:WildForkFoods.Sws.Mobile.Views"
+    Title="WildForkFoods.Sws.Mobile"
+    Shell.TabBarBackgroundColor="White"
+    Shell.TabBarForegroundColor="{StaticResource Orange}"
+    Shell.TabBarTitleColor="Gray"
+    Shell.TabBarUnselectedColor="LightGray">
+
+    <!-- Login Page (shown initially) -->
+    <ShellContent Route="LoginPage"
+                  ContentTemplate="{DataTemplate views:LoginPage}"
+                  Shell.NavBarIsVisible="False"/>
+
+    <TabBar Route="MainTabs">
+        <ShellContent Route="OrderHistoryPage" 
+                      Icon="history.png" 
+                      ContentTemplate="{DataTemplate views:OrderHistoryPage}" />
+        <ShellContent Route="SearchPage" 
+                      Icon="search.svg" 
+                      ContentTemplate="{DataTemplate views:SearchPage}" />
+        <ShellContent Route="CartPage" 
+                      Icon="shopping_cart.png" 
+                      ContentTemplate="{DataTemplate views:CartPage}" />
+        <ShellContent Route="UserPage" 
+                      Icon="person.png" 
+                      ContentTemplate="{DataTemplate views:UserPage}" />
+    </TabBar>
+
+</Shell>

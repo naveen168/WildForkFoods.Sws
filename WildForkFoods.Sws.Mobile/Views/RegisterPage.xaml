@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WildForkFoods.Sws.Mobile.Views.RegisterPage"
+             Title="Register"
+             Shell.NavBarIsVisible="False">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16" VerticalOptions="Center">
+            <!-- Logo or Title -->
+            <Label Text="Create Account"
+                   Style="{StaticResource Headline}"
+                   Margin="0,0,0,16"/>
+
+            <!-- Username -->
+            <Border BackgroundColor="White"
+                    Stroke="#E0E0E0"
+                    StrokeThickness="1"
+                    Padding="12"
+                    StrokeShape="RoundRectangle 8">
+                <Entry Placeholder="Username"
+                       Text="{Binding UserName}"
+                       ReturnType="Next"/>
+            </Border>
+
+            <!-- Name -->
+            <Border BackgroundColor="White"
+                    Stroke="#E0E0E0"
+                    StrokeThickness="1"
+                    Padding="12"
+                    StrokeShape="RoundRectangle 8">
+                <Entry Placeholder="Full Name"
+                       Text="{Binding Name}"
+                       ReturnType="Next"/>
+            </Border>
+
+            <!-- Email -->
+            <Border BackgroundColor="White"
+                    Stroke="#E0E0E0"
+                    StrokeThickness="1"
+                    Padding="12"
+                    StrokeShape="RoundRectangle 8">
+                <Entry Placeholder="Email"
+                       Text="{Binding Email}"
+                       Keyboard="Email"
+                       ReturnType="Next"/>
+            </Border>
+
+            <!-- Password -->
+            <Border BackgroundColor="White"
+                    Stroke="#E0E0E0"
+                    StrokeThickness="1"
+                    Padding="12"
+                    StrokeShape="RoundRectangle 8">
+                <Entry Placeholder="Password"
+                       Text="{Binding Password}"
+                       IsPassword="True"
+                       ReturnType="Next"/>
+            </Border>
+
+            <!-- Confirm Password -->
+            <Border BackgroundColor="White"
+                    Stroke="#E0E0E0"
+                    StrokeThickness="1"
+                    Padding="12"
+                    StrokeShape="RoundRectangle 8">
+                <Entry Placeholder="Confirm Password"
+                       Text="{Binding ConfirmPassword}"
+                       IsPassword="True"
+                       ReturnType="Done"/>
+            </Border>
+
+            <!-- Store Picker -->
+            <Border BackgroundColor="White"
+                    Stroke="#E0E0E0"
+                    StrokeThickness="1"
+                    Padding="12"
+                    StrokeShape="RoundRectangle 8">
+                <Picker Title="Select Store"
+                        ItemsSource="{Binding AvailableStores}"
+                        ItemDisplayBinding="{Binding Name}"
+                        SelectedItem="{Binding SelectedStore}"/>
+            </Border>
+
+            <!-- Error Message -->
+            <Label Text="{Binding ErrorMessage}"
+                   TextColor="Red"
+                   FontSize="14"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}}"
+                   Margin="0,8,0,0"/>
+
+            <!-- Register Button -->
+            <Button Text="Register"
+                    BackgroundColor="{StaticResource Orange}"
+                    TextColor="{StaticResource White}"
+                    Command="{Binding RegisterCommand}"
+                    IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
+                    Margin="0,8,0,0"/>
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                              IsVisible="{Binding IsLoading}"
+                              Color="{StaticResource Orange}"
+                              Margin="0,8,0,0"/>
+
+            <!-- Login Link -->
+            <HorizontalStackLayout HorizontalOptions="Center"
+                                  Spacing="4"
+                                  Margin="0,16,0,0">
+                <Label Text="Already have an account?"
+                       TextColor="Gray"
+                       FontSize="14"/>
+                <Label Text="Login"
+                       TextColor="{StaticResource Orange}"
+                       FontSize="14"
+                       FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToLoginCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

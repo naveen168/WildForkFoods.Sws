@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WildForkFoods.Sws.Mobile.Views.LoginPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="White">
+    <Grid RowDefinitions="*,Auto,*" Padding="24">
+        <!-- Logo/Header Section -->
+        <VerticalStackLayout Grid.Row="0" 
+                             VerticalOptions="End"
+                             Spacing="16">
+            <Label Text="🍖" 
+                   FontSize="64"
+                   HorizontalOptions="Center"/>
+            <Label Text="Wild Fork Foods" 
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="{StaticResource Orange}"/>
+            <Label Text="Store Repleshiment System" 
+                   FontSize="16"
+                   HorizontalOptions="Center"
+                   TextColor="Gray"/>
+        </VerticalStackLayout>
+
+        <!-- Login Form -->
+        <VerticalStackLayout Grid.Row="1" 
+                             Spacing="16"
+                             VerticalOptions="Center">
+            <!-- Username Field -->
+            <Border BackgroundColor="White"
+                    Stroke="#E0E0E0"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 8">
+                <Entry Placeholder="Username"
+                       Text="{Binding UserName}"
+                       Margin="16,8"
+                       FontSize="16"
+                       ReturnCommand="{Binding ClearErrorCommand}"/>
+            </Border>
+
+            <!-- Password Field -->
+            <Border BackgroundColor="White"
+                    Stroke="#E0E0E0"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 8">
+                <Entry Placeholder="Password"
+                       Text="{Binding Password}"
+                       IsPassword="True"
+                       Margin="16,8"
+                       FontSize="16"
+                       ReturnCommand="{Binding LoginCommand}"/>
+            </Border>
+
+            <!-- Error Message -->
+            <Label Text="{Binding ErrorMessage}"
+                   TextColor="Red"
+                   FontSize="14"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource IsNotNullOrEmptyConverter}}"
+                   Margin="0,8,0,0"/>
+
+            <!-- Login Button -->
+            <Button Text="Login"
+                    Command="{Binding LoginCommand}"
+                    IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
+                    Style="{StaticResource PrimaryButtonStyle}"/>
+
+            <!-- Register Button -->
+            <Button Text="Register (Store Manager)"
+                    Command="{Binding NavigateToRegisterCommand}"
+                    IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
+                    Style="{StaticResource SecondaryButtonStyle}"/>
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                              IsVisible="{Binding IsLoading}"
+                              Color="{StaticResource Orange}"
+                              Margin="0,16,0,0"/>
+
+            <!-- Register Navigation -->
+            <!--<HorizontalStackLayout HorizontalOptions="Center"
+                                  Spacing="4"
+                                  Margin="0,16,0,0">
+                <Label Text="Don't have an account?"
+                       TextColor="Gray"
+                       FontSize="14"/>
+                <Label Text="Register"
+                       TextColor="{StaticResource Orange}"
+                       FontSize="14"
+                       FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToRegisterCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>-->
+        </VerticalStackLayout>
+
+        <!-- Footer -->
+        <VerticalStackLayout Grid.Row="2" 
+                             VerticalOptions="End"
+                             Spacing="8">
+            <Label Text="Version 1.0.0" 
+                   FontSize="12"
+                   TextColor="Gray"
+                   HorizontalOptions="Center"/>
+            <Label Text="© 2024 Wild Fork Foods" 
+                   FontSize="12"
+                   TextColor="Gray"
+                   HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

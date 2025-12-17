@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="WildForkFoods.Sws.Mobile.Views.UserPage"
+             Title="Profile"
+             Style="{StaticResource NavigationBar}">
+    <Grid RowDefinitions="*,Auto">
+        <!-- Scrollable Content Area -->
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="16" Spacing="24">
+                <!-- Account Information Section -->
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Account Information" 
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           Margin="0,0,0,8"/>
+
+                    <!-- User Name -->
+                    <Border BackgroundColor="White"
+                            Stroke="#E0E0E0"
+                            StrokeThickness="1"
+                            Padding="16"
+                            StrokeShape="RoundRectangle 8">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <Image Grid.Column="0"
+                                Source="person.svg"
+                                WidthRequest="24"
+                                HeightRequest="24"
+                                VerticalOptions="Center"/>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="User Name"
+                                       FontSize="12"
+                                       TextColor="Gray"/>
+                                <Label Text="{Binding UserName}"
+                                       FontSize="14"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Email -->
+                    <Border BackgroundColor="White"
+                            Stroke="#E0E0E0"
+                            StrokeThickness="1"
+                            Padding="16"
+                            StrokeShape="RoundRectangle 8">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <Image Grid.Column="0"
+                                Source="mail.png"
+                                WidthRequest="24"
+                                HeightRequest="24"
+                                VerticalOptions="Center"/>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="Email"
+                                       FontSize="12"
+                                       TextColor="Gray"/>
+                                <Label Text="{Binding Email}"
+                                       FontSize="14"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <!-- Role -->
+                    <Border BackgroundColor="White"
+                            Stroke="#E0E0E0"
+                            StrokeThickness="1"
+                            Padding="16"
+                            StrokeShape="RoundRectangle 8">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <Image Grid.Column="0"
+                                Source="id_card.png"
+                                WidthRequest="24"
+                                HeightRequest="24"
+                                VerticalOptions="Center"/>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="Role"
+                                       FontSize="12"
+                                       TextColor="Gray"/>
+                                <Label Text="{Binding Role}"
+                                       FontSize="14"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <!-- Store ID Picker -->
+                    <Border BackgroundColor="White"
+                            Stroke="#E0E0E0"
+                            StrokeThickness="1"
+                            Padding="16"
+                            StrokeShape="RoundRectangle 8">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Image Grid.Column="0"
+                                Source="store.svg"
+                                WidthRequest="24"
+                                HeightRequest="24"
+                                VerticalOptions="Center"/>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="Store"
+                                       FontSize="12"
+                                       TextColor="Gray"/>
+                                <Picker ItemsSource="{Binding AvailableStores}"
+                                        SelectedItem="{Binding SelectedStore}"
+                                        ItemDisplayBinding="{Binding DisplayName}"
+                                        FontSize="14"
+                                        FontAttributes="Bold"
+                                        TextColor="{StaticResource Orange}"
+                                        Title="Select Store"
+                                        BackgroundColor="Transparent"/>
+                            </VerticalStackLayout>
+                            <!-- Dropdown Arrow -->
+                            <Label Grid.Column="2"
+                                   Text="▼"
+                                   FontSize="12"
+                                   TextColor="{StaticResource Orange}"
+                                   VerticalOptions="Center"
+                                   InputTransparent="True"/>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Bottom Section (Fixed at bottom) -->
+        <VerticalStackLayout Grid.Row="1" 
+                             Padding="16" 
+                             Spacing="12"
+                             BackgroundColor="White">
+            <!-- Logout Button -->
+            <Button Text="Logout"
+                    BackgroundColor="{StaticResource Orange}"
+                    TextColor="{StaticResource White}"
+                    CornerRadius="8"
+                    Padding="16"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    Command="{Binding LogoutCommand}"/>
+
+            <!-- App Information -->
+            <VerticalStackLayout Spacing="4" Margin="0,8,0,8">
+                <Label Text="App Version 1.0.0" 
+                       FontSize="12"
+                       TextColor="Gray"
+                       HorizontalOptions="Center"/>
+                <Label Text="© 2024 Wild Fork Foods" 
+                       FontSize="12"
+                       TextColor="Gray"
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

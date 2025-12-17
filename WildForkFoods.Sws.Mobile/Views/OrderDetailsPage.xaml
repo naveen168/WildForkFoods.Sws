@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WildForkFoods.Sws.Mobile.Views.OrderDetailsPage"
+             x:Name="page"
+             Title="Order Details"
+             Style="{StaticResource NavigationBar}">
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+            <!-- Order Header -->
+            <Border BackgroundColor="White"
+                    Stroke="#E0E0E0"
+                    StrokeThickness="1"
+                    Padding="16"
+                    StrokeShape="RoundRectangle 8">
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto"  RowSpacing="8">
+                    <Label Grid.Row="0" Grid.Column="0"
+                           Text="{Binding Order.OrderNumber, StringFormat='Order #{0}'}"
+                           FontSize="24"
+                           FontAttributes="Bold"/>
+
+
+                    <!-- Status Badge -->
+                    <Border Grid.Row="0" Grid.Column="1"
+                                        Padding="8,4"
+                                        StrokeShape="RoundRectangle 4">
+                        <Label Text="{Binding Order.Status}" 
+                                           TextColor="Black"
+                                           FontSize="12"
+                                           FontAttributes="Bold"/>
+                    </Border>
+
+                    <Label Grid.Row="2"
+                           Text="{Binding Order.OrderDate, StringFormat='Ordered: {0:MMM dd, yyyy}'}"
+                           FontSize="14"
+                           TextColor="Gray"/>
+
+                    <Label Grid.Row="3"
+                           Text="{Binding Order.DeliveryDate, StringFormat='Delivery: {0:MMM dd, yyyy}'}"
+                           FontSize="14"
+                           TextColor="Gray"/>
+                </Grid>
+            </Border>
+
+            <!-- Order Lines Section -->
+            <Label Text="Order Items"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   Margin="0,8,0,0"/>
+
+            <CollectionView ItemsSource="{Binding Order.OrderLines}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BackgroundColor="White"
+                                Stroke="#E0E0E0"
+                                StrokeThickness="1"
+                                Padding="16"
+                                Margin="0,0,0,8"
+                                StrokeShape="RoundRectangle 8">
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="4">
+                                <!-- Product Name -->
+                                <Label Grid.Row="0" Grid.Column="0"
+                                       Text="{Binding ProductName}"
+                                       FontSize="16"
+                                       FontAttributes="Bold"/>
+
+                                <!-- Line Total -->
+                                <Label Grid.Row="0" Grid.Column="1"
+                                       Text="{Binding LineTotal, StringFormat='${0:F2}'}"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{StaticResource Orange}"/>
+
+                                <!-- SKU -->
+                                <Label Grid.Row="1" Grid.Column="0"
+                                       Text="{Binding Sku, StringFormat='SKU: {0}'}"
+                                       FontSize="14"
+                                       TextColor="Gray"/>
+
+                                <!-- Quantity and Price -->
+                                <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="0"
+                                       FontSize="14"
+                                       TextColor="Gray">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding Quantity, StringFormat='Qty: {0}'}" />
+                                            <Span Text=" × " />
+                                            <Span Text="{Binding UnitPrice, StringFormat='${0:F2}'}" />
+                                            <Span Text="{Binding Unit, StringFormat=' / {0}'}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <!-- Remove Button -->
+                                <Button Grid.Row="2" Grid.Column="1"
+                                        ImageSource="delete.png"
+                                        HorizontalOptions="End"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveCommand}"
+                                        CommandParameter="{Binding}"
+                                        IsVisible="False"
+                                        Style="{StaticResource SecondaryButtonStyle}">
+                                    <Button.Triggers>
+                                        <DataTrigger TargetType="Button"
+                                            Binding="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.Order.Status}"
+                                                     Value="Pending Approval">
+                                            <Setter Property="IsVisible" Value="True"/>
+                                        </DataTrigger>
+                                    </Button.Triggers>
+                                </Button>
+
+                                <!-- Add to Cart -->
+                                <Button Grid.Row="2" Grid.Column="1"
+                                        Text="Add to Cart"
+                                        HorizontalOptions="End"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AddToCartCommand}"
+                                        CommandParameter="{Binding}"  >
+                                    <Button.Triggers>
+                                        <DataTrigger TargetType="Button"
+                                            Binding="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.Order.Status}"
+                                            Value="Pending Approval">
+                                            <Setter Property="IsVisible" Value="False"/>
+                                        </DataTrigger>
+                                    </Button.Triggers>
+                                </Button>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Order Summary -->
+            <Border BackgroundColor="White"
+                    Stroke="#E0E0E0"
+                    StrokeThickness="1"
+                    Padding="16"
+                    Margin="0,8,0,0"
+                    StrokeShape="RoundRectangle 8">
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="8">
+                    <Label Grid.Row="0" Grid.Column="0"
+                           Text="Subtotal"
+                           FontSize="16"/>
+                    <Label Grid.Row="0" Grid.Column="1"
+                           Text="{Binding Order.TotalAmount, StringFormat='${0:F2}'}"
+                           FontSize="16"/>
+
+                    <BoxView Grid.Row="1" Grid.ColumnSpan="2"
+                             HeightRequest="1"
+                             Color="#E0E0E0"/>
+
+                    <Label Grid.Row="2" Grid.Column="0"
+                           Text="Total"
+                           FontSize="20"
+                           FontAttributes="Bold"/>
+                    <Label Grid.Row="2" Grid.Column="1"
+                           Text="{Binding Order.TotalAmount, StringFormat='${0:F2}'}"
+                           FontSize="20"        
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource Orange}"/>
+                </Grid>
+            </Border>
+
+            <!--Approve Order-->
+            <Button 
+                Text="Approve Order"
+                Command="{Binding ApproveCommand}"
+                IsVisible="False" >
+                <Button.Triggers>
+                    <MultiTrigger TargetType="Button">
+                        <MultiTrigger.Conditions>
+                            <BindingCondition Binding="{Binding IsStoreManager}" Value="True" />
+                            <BindingCondition Binding="{Binding Order.Status}" Value="Pending Approval" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="IsVisible" Value="True" />
+                    </MultiTrigger>
+                </Button.Triggers>
+            </Button>
+
+            <!--Cancel-->
+            <Button Text="Cancel"                 
+                    Command="{Binding Source={x:Reference page}, Path=BindingContext.ViewOrderDetailsCommand}"
+                    CommandParameter="{Binding}"
+                    IsVisible="False"
+                    Style="{StaticResource SecondaryButtonStyle}" >
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button"
+                                 Binding="{Binding Order.Status}"
+                                 Value="Pending Approval">
+                        <Setter Property="IsVisible" Value="True"/>
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+
+            <!--Re-Order-->
+            <Button Text="Re-Order"
+                    Command="{Binding ReOrderCommand}"
+                    IsVisible="True">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button"
+                                 Binding="{Binding Order.Status}"
+                                 Value="Pending Approval">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

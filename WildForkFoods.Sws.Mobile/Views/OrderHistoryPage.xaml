@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WildForkFoods.Sws.Mobile.Views.OrderHistoryPage"
+             x:Name="page"
+             Title="Recent Orders"
+             Style="{StaticResource NavigationBar}">
+    <Grid RowDefinitions="Auto,*" Padding="16">
+        <!-- Search Bar -->
+        <SearchBar Grid.Row="0"
+                   Placeholder="Search orders..."
+                   Text="{Binding SearchText}"
+                   SearchCommand="{Binding SearchCommand}"
+                   Margin="0,0,0,8"/>
+
+        <!-- Orders List -->
+        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding RefreshCommand}">
+            <CollectionView ItemsSource="{Binding FilteredOrders}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BackgroundColor="White"
+                                Stroke="#E0E0E0"
+                                StrokeThickness="1"
+                                Padding="16"
+                                Margin="0,0,0,12"
+                                StrokeShape="RoundRectangle 8">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Source={x:Reference page}, Path=BindingContext.ViewOrderDetailsCommand}"
+                                    CommandParameter="{Binding}"/>
+                            </Border.GestureRecognizers>
+                            <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto" RowSpacing="8">
+                                <!-- Order Number -->
+                                <Label Grid.Row="0" Grid.Column="0"
+                                       Text="{Binding OrderNumber, StringFormat='Order #{0}'}" 
+                                       FontSize="18"
+                                       FontAttributes="Bold"/>
+
+                                <!-- Status Badge -->
+                                <Border Grid.Row="0" Grid.Column="1"
+                                        Padding="8,4"
+                                        StrokeShape="RoundRectangle 4">
+                                    <Label Text="{Binding Status}" 
+                                           TextColor="Black"
+                                           FontSize="12"
+                                           FontAttributes="Bold"/>
+                                </Border>
+                                
+                                <!-- Order Date -->
+                                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                       Text="{Binding OrderDate, StringFormat='Ordered: {0:MMM dd, yyyy}'}" 
+                                       FontSize="14"
+                                       TextColor="Gray"/>
+
+                                <!-- Delivery Date -->
+                                <Label Grid.Row="2" Grid.Column="0"
+                                       Text="{Binding DeliveryDate, StringFormat='Delivery: {0:MMM dd, yyyy}'}" 
+                                       FontSize="14"
+                                       TextColor="Gray"/>
+
+                                <!-- Chevron Icon -->
+                                <Label Grid.Row="2" Grid.Column="1"
+                                       Text="..."
+                                       FontSize="14"
+                                       TextColor="{StaticResource Orange}"
+                                       HorizontalOptions="End"
+                                       VerticalOptions="Center"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <!-- Empty State -->
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout HorizontalOptions="Center" 
+                                         VerticalOptions="Center"
+                                         Spacing="16"
+                                         Padding="32">
+                        <Label Text="📦" 
+                               FontSize="48"
+                               HorizontalOptions="Center"/>
+                        <Label Text="No orders yet" 
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Your recent orders will appear here" 
+                               FontSize="14"
+                               TextColor="Gray"
+                               HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

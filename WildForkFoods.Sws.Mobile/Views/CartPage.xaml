@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WildForkFoods.Sws.Mobile.Views.CartPage"
+             Title="Cart"
+             Style="{StaticResource NavigationBar}">
+    <Grid Padding="12">
+        <VerticalStackLayout Spacing="8">
+            <!-- Store ID (Read-only) -->
+            <Border BackgroundColor="White"
+                    Stroke="#E0E0E0"
+                    StrokeThickness="1"
+                    Padding="12"
+                    StrokeShape="RoundRectangle 8"
+                    IsVisible="{Binding HasItems}">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Store ID"
+                           FontSize="12"
+                           TextColor="Gray"/>
+                    <Label Text="{Binding StoreId}"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="#333333"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Delivery Date Picker -->
+            <Border BackgroundColor="White"
+                    Stroke="#E0E0E0"
+                    StrokeThickness="1"
+                    Padding="12"
+                    StrokeShape="RoundRectangle 8"
+                    IsVisible="{Binding HasItems}">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Delivery Date"
+                           FontSize="12"
+                           TextColor="Gray"/>
+                    <DatePicker Date="{Binding DeliveryDate}"
+                                MinimumDate="{Binding MinimumDeliveryDate}"
+                                FontSize="16"
+                                TextColor="#333333"/>
+                </VerticalStackLayout>
+            </Border>
+            
+            <!-- Cart Items List -->
+            <CollectionView ItemsSource="{Binding Lines}"
+                            IsVisible="{Binding HasItems}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BackgroundColor="White"
+                                Stroke="#E0E0E0"
+                                StrokeThickness="1"
+                                Padding="12"
+                                Margin="0,0,0,8"
+                                StrokeShape="RoundRectangle 8,0,0,8">
+                            <Grid ColumnDefinitions="*,*,Auto" RowDefinitions="Auto,Auto,Auto" Padding="4" RowSpacing="8">
+                                <!-- Name -->
+                                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                                       Text="{Binding Name}" 
+                                       TextColor="Gray"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       VerticalOptions="Center"/>
+                                
+                                <!-- SKU -->
+                                <Label Grid.Row="1" Grid.Column="0"
+                                       Text="{Binding Sku}" 
+                                       TextColor="Gray"
+                                       FontSize="14"
+                                       VerticalOptions="Center"/>
+
+                                <!-- Quantity Controls with Border and Unit -->
+                                <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Spacing="8">
+                                    <Border Stroke="{StaticResource Orange}"
+                                            StrokeThickness="2"
+                                            StrokeShape="RoundRectangle 20,20,20,20"
+                                            BackgroundColor="White">
+                                        <HorizontalStackLayout Spacing="0">
+                                            <!-- Minus Button -->
+                                            <Button Text="-"
+                                                    WidthRequest="40"
+                                                    HeightRequest="40"
+                                                    FontSize="20"
+                                                    BackgroundColor="Transparent"
+                                                    TextColor="{StaticResource Orange}"
+                                                    Padding="0"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DecrementCommand}"
+                                                    CommandParameter="{Binding}" />
+
+                                            <!-- Current Quantity -->
+                                            <Label Text="{Binding Quantity}"
+                                                   FontSize="18"
+                                                   FontAttributes="Bold"
+                                                   WidthRequest="25"
+                                                   HorizontalTextAlignment="Center"
+                                                   VerticalOptions="Center"/>
+
+                                            <!-- Plus Button -->
+                                            <Button Text="+"
+                                                    WidthRequest="40"
+                                                    HeightRequest="40"
+                                                    FontSize="20"
+                                                    BackgroundColor="Transparent"
+                                                    TextColor="{StaticResource Orange}"
+                                                    Padding="0"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IncrementCommand}"
+                                                    CommandParameter="{Binding}" />
+                                        </HorizontalStackLayout>
+                                    </Border>
+                                    
+                                    <!-- Unit -->
+                                    <Label Text="{Binding Unit}"
+                                           FontSize="16"
+                                           TextColor="Gray"
+                                           VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+
+                                <!-- Remove Button -->
+                                <Button Grid.Row="2" Grid.Column="1"
+                                        ImageSource="delete.png"
+                                        BackgroundColor="{StaticResource Orange}"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Center"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveCommand}"
+                                        CommandParameter="{Binding}" />
+
+                                <!-- Quantity Controls with Border -->
+                                <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
+                                        Stroke="{StaticResource Orange}"
+                                        StrokeThickness="2"
+                                        StrokeShape="RoundRectangle 20,20,20,20"
+                                        BackgroundColor="White"
+                                        HorizontalOptions="Start">
+                                    <HorizontalStackLayout Spacing="0">
+                                        <!-- Minus Button -->
+                                        <Button Text="-"
+                                                WidthRequest="40"
+                                                HeightRequest="40"
+                                                FontSize="20"
+                                                BackgroundColor="Transparent"
+                                                TextColor="{StaticResource Orange}"
+                                                Padding="0"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DecrementCommand}"
+                                                CommandParameter="{Binding}" />
+
+                                        <!-- Current Quantity -->
+                                        <Label Text="{Binding Quantity}"
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               WidthRequest="25"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalOptions="Center"/>
+
+                                        <!-- Plus Button -->
+                                        <Button Text="+"
+                                                WidthRequest="40"
+                                                HeightRequest="40"
+                                                FontSize="20"
+                                                BackgroundColor="Transparent"
+                                                TextColor="{StaticResource Orange}"
+                                                Padding="0"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IncrementCommand}"
+                                                CommandParameter="{Binding}" />
+                                    </HorizontalStackLayout>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+            <!-- Submit Button (visible only when cart has items) -->
+            <Button Text="Submit" 
+                    BackgroundColor="{StaticResource Orange}"
+                    TextColor="{StaticResource White}"
+                    Command="{Binding SubmitCommand}"
+                    IsVisible="{Binding HasItems}" />
+            
+            <Label Text="{Binding Status}" 
+                   TextColor="Gray"
+                   IsVisible="{Binding HasItems}" />
+        </VerticalStackLayout>
+
+        <!-- Empty Cart Message -->
+        <VerticalStackLayout IsVisible="{Binding IsEmpty}"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center"
+                             Spacing="16">
+            <Label Text="🛒" 
+                   FontSize="64"
+                   HorizontalOptions="Center"/>
+            <Label Text="Your cart is empty" 
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"/>
+            <Label Text="Start scanning items to add them to your cart" 
+                   FontSize="14"
+                   TextColor="Gray"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
